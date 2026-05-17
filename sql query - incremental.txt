@@ -1,0 +1,58 @@
+CREATE TABLE staging_transactions_stage (
+  txn_id VARCHAR(20),
+  store_id VARCHAR(10),
+  customer_id VARCHAR(20),
+  txn_date DATE,
+  product_id VARCHAR(20),
+  quantity INT,
+  unit_price FLOAT,
+  total_amount FLOAT,
+  last_updated DATETIME2(0)
+);
+
+CREATE TABLE gold_fact_transactions (
+  txn_id VARCHAR(20) ,
+  store_id VARCHAR(10),
+  customer_id VARCHAR(20),
+  txn_date DATE,
+  product_id VARCHAR(20),
+  quantity INT,
+  unit_price FLOAT,
+  total_amount FLOAT,
+  last_updated DATETIME2(0)
+);
+
+CREATE OR ALTER PROCEDURE sp_upsert_transactions AS
+BEGIN
+    -- Step 1: Update existing records (based on last_updated)
+    UPDATE gold_fact_transactions
+    SET
+        store_id = src.store_id,
+        customer_id = src.customer_id,
+        txn_date = src.txn_date,
+        product_id = src.product_id,
+        quantity = src.quantity,
+        unit_price = src.unit_price,
+        total_amount = src.total_amount,
+        last_updated = src.last_updated
+    FROM staging_transactions_stage AS src
+    WHERE gold_fact_transactions.txn_id = src.txn_id
+      AND gold_fact_transactions.last_updated < src.last_updated;
+
+    -- Step 2: Insert new records (no JOIN used)
+    INSERT INTO gold_fact_transactions (
+        txn_id, store_id, customer_id, txn_date,
+        product_id, quantity, unit_price,
+        total_amount, last_updated
+    )
+    SELECT
+        txn_id, store_id, customer_id, txn_date,
+        product_id, quantity, unit_price,
+        total_amount, last_updated
+    FROM staging_transactions_stage AS src
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM gold_fact_transactions
+        WHERE txn_id = src.txn_id
+    );
+END;
