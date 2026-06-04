@@ -1,0 +1,37 @@
+{
+  "formatVersion": "202502",
+  "computeEngineSettings": {
+    "allowModernEvaluationEngine": true
+  },
+  "name": "Dataflow 1",
+  "queryGroups": [],
+  "documentLocale": "en-GB",
+  "queriesMetadata": {
+    "bronze Application Cities": {
+      "queryId": "7c9cc78c-b9aa-40eb-bf0e-949624ba43dc",
+      "queryName": "bronze Application Cities"
+    },
+    "Geography": {
+      "queryId": "cd98a2e9-8779-40aa-b25d-1359e44855d0",
+      "queryName": "Geography",
+      "loadEnabled": false
+    },
+    "bronze Application StateProvinces": {
+      "queryId": "26784c43-40e5-4e27-8aae-1f16f8739b65",
+      "queryName": "bronze Application StateProvinces"
+    },
+    "Geography_DataDestination": {
+      "queryId": "9fc3756f-bfd8-4345-a495-709cc43ea303",
+      "queryName": "Geography_DataDestination",
+      "isHidden": true,
+      "loadEnabled": false
+    }
+  },
+  "connections": [
+    {
+      "path": "Lakehouse",
+      "kind": "Lakehouse",
+      "connectionId": "{\"ClusterId\":\"50ec940b-8b11-437c-bfd3-6001223d3126\",\"DatasourceId\":\"3f2974ee-0d45-4a97-a029-4f901a1be51f\"}"
+    }
+  ]
+}
