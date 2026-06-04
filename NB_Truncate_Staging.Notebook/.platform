@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "NB_Truncate_Staging"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "432dd1b0-f0eb-afca-4110-ebdd7c41000e"
+  }
+}

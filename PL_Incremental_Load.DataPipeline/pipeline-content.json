@@ -2,6 +2,22 @@
   "properties": {
     "activities": [
       {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "432dd1b0-f0eb-afca-4110-ebdd7c41000e",
+          "workspaceId": "00000000-0000-0000-0000-000000000000"
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "ACT_Truncate_Staging",
+        "dependsOn": []
+      },
+      {
         "type": "GetMetadata",
         "typeProperties": {
           "datasetSettings": {
@@ -30,9 +46,7 @@
             "annotations": []
           },
           "fieldList": [
-            "childItems",
-            "itemName",
-            "lastModified"
+            "childItems"
           ],
           "storeSettings": {
             "type": "LakehouseReadSettings",
@@ -49,15 +63,22 @@
           "secureInput": false,
           "secureOutput": false
         },
-        "name": "Get Metadata1",
-        "dependsOn": []
+        "name": "ACT_GetMetadata_Source",
+        "dependsOn": [
+          {
+            "activity": "ACT_Truncate_Staging",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
       },
       {
         "type": "ForEach",
         "typeProperties": {
           "isSequential": true,
           "items": {
-            "value": "@activity('Get Metadata1').output.childItems",
+            "value": "@activity('ACT_GetMetadata_Source').output.childItems",
             "type": "Expression"
           },
           "activities": [
@@ -116,14 +137,19 @@
                     "fileExtension": ".txt"
                   },
                   "storeSettings": {
-                    "type": "LakehouseWriteSettings"
+                    "type": "LakehouseWriteSettings",
+                    "copyBehavior": "FlattenHierarchy"
                   },
                   "datasetSettings": {
                     "type": "DelimitedText",
                     "typeProperties": {
                       "location": {
                         "type": "LakehouseLocation",
-                        "folderPath": "destination"
+                        "folderPath": "staging",
+                        "fileName": {
+                          "value": "@item().name",
+                          "type": "Expression"
+                        }
                       },
                       "columnDelimiter": ",",
                       "quoteChar": "\"",
@@ -166,15 +192,47 @@
                 "secureInput": false,
                 "secureOutput": false
               },
-              "name": "Copy data1",
+              "name": "ACT_Copy_SourceToStaging",
               "dependsOn": []
+            },
+            {
+              "type": "TridentNotebook",
+              "typeProperties": {
+                "notebookId": "d4fbeff5-6288-a874-4c77-51d435e4bbcf",
+                "workspaceId": "00000000-0000-0000-0000-000000000000",
+                "parameters": {
+                  "file_name": {
+                    "value": {
+                      "value": "@item().name",
+                      "type": "Expression"
+                    },
+                    "type": "string"
+                  }
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "ACT_Notebook_StagingToSilver",
+              "dependsOn": [
+                {
+                  "activity": "ACT_Copy_SourceToStaging",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
             }
           ]
         },
-        "name": "ForEach1",
+        "name": "ACT_ForEach_Files",
         "dependsOn": [
           {
-            "activity": "Get Metadata1",
+            "activity": "ACT_GetMetadata_Source",
             "dependencyConditions": [
               "Succeeded"
             ]

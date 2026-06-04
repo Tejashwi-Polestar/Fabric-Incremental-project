@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Sales.Invoices",
+    "path": "/Tables/bronze",
+    "target": {
+      "type": "AdlsGen2",
+      "adlsGen2": {
+        "connectionId": "8c42f409-d6d8-439f-b1f3-7b72fef5b89e",
+        "location": "https://stvnextblobstorage.dfs.core.windows.net",
+        "subpath": "/fabrikam-sales/Delta-Parquet-Format-FY25/Sales.Invoices"
+      }
+    }
+  },
+  {
+    "name": "Sales.InvoiceLines",
+    "path": "/Tables/bronze",
+    "target": {
+      "type": "AdlsGen2",
+      "adlsGen2": {
+        "connectionId": "8c42f409-d6d8-439f-b1f3-7b72fef5b89e",
+        "location": "https://stvnextblobstorage.dfs.core.windows.net",
+        "subpath": "/fabrikam-sales/Delta-Parquet-Format-FY25/Sales.InvoiceLines"
+      }
+    }
+  },
+  {
+    "name": "Sales.Customers",
+    "path": "/Tables/bronze",
+    "target": {
+      "type": "AdlsGen2",
+      "adlsGen2": {
+        "connectionId": "8c42f409-d6d8-439f-b1f3-7b72fef5b89e",
+        "location": "https://stvnextblobstorage.dfs.core.windows.net",
+        "subpath": "/fabrikam-sales/Delta-Parquet-Format-FY25/Sales.Customers"
+      }
+    }
+  },
+  {
+    "name": "DateDim",
+    "path": "/Tables/bronze",
+    "target": {
+      "type": "AdlsGen2",
+      "adlsGen2": {
+        "connectionId": "8c42f409-d6d8-439f-b1f3-7b72fef5b89e",
+        "location": "https://stvnextblobstorage.dfs.core.windows.net",
+        "subpath": "/fabrikam-sales/Delta-Parquet-Format-FY25/DateDim"
+      }
+    }
+  },
+  {
+    "name": "Application.StateProvinces",
+    "path": "/Tables/bronze",
+    "target": {
+      "type": "AdlsGen2",
+      "adlsGen2": {
+        "connectionId": "8c42f409-d6d8-439f-b1f3-7b72fef5b89e",
+        "location": "https://stvnextblobstorage.dfs.core.windows.net",
+        "subpath": "/fabrikam-sales/Delta-Parquet-Format-FY25/Application.StateProvinces"
+      }
+    }
+  },
+  {
+    "name": "Application.Countries",
+    "path": "/Tables/bronze",
+    "target": {
+      "type": "AdlsGen2",
+      "adlsGen2": {
+        "connectionId": "8c42f409-d6d8-439f-b1f3-7b72fef5b89e",
+        "location": "https://stvnextblobstorage.dfs.core.windows.net",
+        "subpath": "/fabrikam-sales/Delta-Parquet-Format-FY25/Application.Countries"
+      }
+    }
+  },
+  {
+    "name": "Application.Cities",
+    "path": "/Tables/bronze",
+    "target": {
+      "type": "AdlsGen2",
+      "adlsGen2": {
+        "connectionId": "8c42f409-d6d8-439f-b1f3-7b72fef5b89e",
+        "location": "https://stvnextblobstorage.dfs.core.windows.net",
+        "subpath": "/fabrikam-sales/Delta-Parquet-Format-FY25/Application.Cities"
+      }
+    }
+  }
+]
