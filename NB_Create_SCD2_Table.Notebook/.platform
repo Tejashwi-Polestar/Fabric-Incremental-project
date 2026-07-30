@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "NB_Create_SCD2_Table"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "1db8f0f2-f1d0-8222-42ca-c93a3bcb6243"
+  }
+}
